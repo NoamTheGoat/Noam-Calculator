@@ -26,11 +26,7 @@ def infixToPostfix(s):
         c = s[i]
 
         if c.isdigit():
-            num = c
-            while s[i + 1].isdigit(): #i + 1 < len(s) and
-                i += 1
-                num += s[i]
-            result.append(num)
+            result.append(c)
 
         elif c == '(':
             st.append('(')
@@ -53,5 +49,5 @@ def infixToPostfix(s):
     return result
 
 
-exp = "2+(4@2-800)"
-print(infixToPostfix(["4","@","(", "-", "2", "@","2",")"]))
+#exp = "2+(4@2-800)"
+#print(infixToPostfix(["5","+","4","+","8"]))
