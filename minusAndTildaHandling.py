@@ -1,5 +1,5 @@
-MATH_OPERATORS = ['+', '-', '*', '/', '^', '%', '~', '!', '(', ')']
-MATH_OPERATORS_ABOVE_UNARY_MINUS = ['^', '%', '~', '!']
+MATH_OPERATORS = ['+', '-', '*', '/', '^', '%', '~', '!', '#', '(', ')']
+MATH_OPERATORS_ABOVE_UNARY_MINUS = ['^', '%', '~', '!', '#']
 
 def minusAndTildaHandling(input_list):
     result = []
@@ -64,6 +64,6 @@ def minusOrTildaReduction(list, index = 0):
     #if(list[i] >= '0' and list[i] <= '9'): #check if i finished the list
     return i
 
-#print(minusAndTildaHandling(["-", "5"]))
+#print(minusAndTildaHandling(["-", "5", "#"]))
 #print(minusAndTildaHandling(["-", "5", "!"]))
 #print(minusAndTildaHandling(["~","(", "-", "2", "-", "-", "555","!",")"]))

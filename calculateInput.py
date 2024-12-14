@@ -29,4 +29,4 @@ def calculate(equastion):
 
     return solution
 
-print(calculate(""))
+print(calculate("1234.5#"))

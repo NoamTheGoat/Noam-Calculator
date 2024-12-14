@@ -1,6 +1,6 @@
 # Function to return precedence of operators
 def prec(c):
-    if c == '!' or c == '~':
+    if c == '!' or c == '~' or c == '#':
         return 6
     elif c == '@' or c == '&' or c == '$':
         return 5
@@ -15,6 +15,12 @@ def prec(c):
     else:
         return -1
 
+def is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
 
 # Function to perform infix to postfix conversion
 def infixToPostfix(s):
@@ -25,7 +31,7 @@ def infixToPostfix(s):
     while i < len(s):
         c = s[i]
 
-        if c.isdigit():
+        if is_number(c):
             result.append(c)
 
         elif c == '(':
@@ -50,4 +56,4 @@ def infixToPostfix(s):
 
 
 #exp = "2+(4@2-800)"
-#print(infixToPostfix(["5","+","4","+","8"]))
+#print(infixToPostfix(["1234.5","#"]))
