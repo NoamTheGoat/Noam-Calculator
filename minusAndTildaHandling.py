@@ -1,36 +1,29 @@
-MATH_OPERATORS = ['+', '-', '*', '/', '^', '%', '~', '!', '#', '(', ')']
-MATH_OPERATORS_ABOVE_UNARY_MINUS = ['^', '%', '~', '!', '#']
+MATH_OPERATORS = ['+', '-', '*', '/', '^', '%', '~', '!', '(']
 
 def minusAndTildaHandling(input_list):
     result = []
     temp_index = 0
-    is_unary_minus = False
+    #is_unary_minus = False
     is_sign_minus = False
     if input_list[0] == '~':
         temp_index = minusOrTildaReduction(input_list)
         if temp_index % 2 == 1:
             result.append('-')
 
-
     elif input_list[0] == '-':
         temp_index = minusOrTildaReduction(input_list)
         if temp_index % 2 == 1:
-            result.append('-')
-
-        temp_ptr_index = temp_index + 1
-        if  temp_ptr_index < len(input_list) and input_list[temp_ptr_index] in MATH_OPERATORS_ABOVE_UNARY_MINUS:
-            is_unary_minus = True
+            result.append('u')
 
     i = temp_index
     while i < len(input_list):
         c = input_list[i]
 
         if c == '~' or (c == '-' and (input_list[i - 1] in MATH_OPERATORS)):
-            if result[-1] == '(': #unary minus
-                is_unary_minus = True
+            if result[-1] == '(':
                 tIndex = minusOrTildaReduction(input_list, i)
-                if tIndex % 2 == 1:
-                    result.append('-')
+                if (tIndex - i) % 2 == 1:
+                    result.append('u')
             else:
                 is_sign_minus = True
                 tIndex=minusOrTildaReduction(input_list, i)
@@ -39,11 +32,9 @@ def minusAndTildaHandling(input_list):
                 i = tIndex - 1
 
         elif c.isdigit():
-            if result and (result[-1] == '-' and is_sign_minus) and not is_unary_minus:
+            if result and (result[-1] == '-' and is_sign_minus): # and not is_unary_minus:
                 result[-1] = '-' + c
-                is_sign_minus = False
             else:
-                is_unary_minus = False
                 result.append(c)
 
         elif c in MATH_OPERATORS:
