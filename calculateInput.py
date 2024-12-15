@@ -5,7 +5,7 @@ from evalPostfix import evalPostfix
 
 def calculate(equastion):
 
-    equastion.strip()
+    equastion = "".join(equastion.split())
     eq_list = list(equastion)
 
     #legalCharacters(eq_list)
@@ -28,4 +28,4 @@ def calculate(equastion):
 
     return solution
 
-print(calculate("1234.5#"))
+print(calculate("2 * (3 + 5) - 4 / 2 ^ 2 "))

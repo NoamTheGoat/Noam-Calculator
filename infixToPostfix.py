@@ -1,6 +1,9 @@
+MATH_OPERATORS = ['+', '-', '*', '/', '^', '%', '~', '!']
+
+
 # Function to return precedence of operators
 def prec(c):
-    if c == '!' or c == '~' or c == '#':
+    if c == '!' or c == '#':
         return 6
     elif c == '@' or c == '&' or c == '$':
         return 5
@@ -8,6 +11,8 @@ def prec(c):
         return 4
     elif c == '^':
         return 3
+    elif c=='u':
+        return 2.5
     elif c == '/' or c == '*':
         return 2
     elif c == '+' or c == '-':
@@ -37,9 +42,10 @@ def infixToPostfix(s):
         elif c == '(':
             st.append('(')
 
-
         elif c == ')':
             while st and st[-1] != '(':
+                result.append(st.pop())
+            if st[-1] == 'u':
                 result.append(st.pop())
             st.pop()
 

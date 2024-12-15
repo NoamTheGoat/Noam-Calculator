@@ -5,7 +5,7 @@ from customArithmeticOperations.avgArthOpr import avgOpr
 from customArithmeticOperations.factorialArthOpr import factorialOpr
 from infixToPostfix import is_number
 
-BIN_MATH_OPERATORS = ['+', '-', '*', '/', '^', '%']
+BIN_MATH_OPERATORS = ['+', '-', '*', '/', '^', '%', '$', '&', '@']
 UN_MATH_OPERATORS = ['!', '#']
 def evalPostfix(expression):
     operand_list = []
@@ -16,7 +16,7 @@ def evalPostfix(expression):
             operand_list.append(float(c))
 
         #check if '-' is unary minus
-        elif c == '-' and (i+1==len(expression) or expression[i+1] in BIN_MATH_OPERATORS or expression[i+1] in UN_MATH_OPERATORS):
+        elif c == 'u':
             result = evalUn(operand_list.pop(), c)
             operand_list.append(result)
 
@@ -57,5 +57,5 @@ def evalUn(operand, operator):
         return factorialOpr(operand)
     elif operator == '#':
         return digSumArthOpr(operand)
-    elif operator == '-':
-        return -1*operand
+    elif operator == 'u':  # Unary minus
+        return -operand
