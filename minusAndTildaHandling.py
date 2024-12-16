@@ -1,14 +1,15 @@
-MATH_OPERATORS = ['+', '-', '*', '/', '^', '%', '~', '!', '(']
+MATH_OPERATORS = ['+', '-', '*', '/', '^', '%', '~', '(']
 
 def minusAndTildaHandling(input_list):
     result = []
     temp_index = 0
-    #is_unary_minus = False
+    is_tilda_minus = False
     is_sign_minus = False
     if input_list[0] == '~':
         temp_index = minusOrTildaReduction(input_list)
         if temp_index % 2 == 1:
             result.append('-')
+            is_tilda_minus =True
 
     elif input_list[0] == '-':
         temp_index = minusOrTildaReduction(input_list)
@@ -20,6 +21,8 @@ def minusAndTildaHandling(input_list):
         c = input_list[i]
 
         if c == '~' or (c == '-' and (input_list[i - 1] in MATH_OPERATORS)):
+            if c == '~':
+                is_tilda_minus = True
             if result[-1] == '(':
                 tIndex = minusOrTildaReduction(input_list, i)
                 if (tIndex - i) % 2 == 1:
@@ -32,7 +35,7 @@ def minusAndTildaHandling(input_list):
                 i = tIndex - 1
 
         elif c.isdigit():
-            if result and (result[-1] == '-' and is_sign_minus): # and not is_unary_minus:
+            if result and ((result[-1] == '-' and is_sign_minus) or is_tilda_minus):
                 result[-1] = '-' + c
             else:
                 result.append(c)

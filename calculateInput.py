@@ -10,9 +10,6 @@ def calculate(equastion):
 
     #legalCharacters(eq_list)
     #otherErrorChecks
-    #hastagErrorCheck(eq_List)
-
-    #eq_list = hastagHandling(eq_list)
 
     #minusAndTildaErrorCheck(eq_List)
 
@@ -28,4 +25,4 @@ def calculate(equastion):
 
     return solution
 
-print(calculate("2 * (3 + 5) - 4 / 2 ^ 2 "))
+print(calculate("4--------4-4"))
