@@ -1,3 +1,6 @@
+from exceptions import SyntaxInputError
+
+
 def buildNumbers(expression):
     result = []
 
@@ -6,21 +9,20 @@ def buildNumbers(expression):
         c = expression[i]
 
         if c.isdigit():
-            num = c
-            while i+1<len(expression) and expression[i + 1].isdigit(): #i + 1 < len(s) and
-                i += 1
-                num += expression[i]
-            if i+1<len(expression) and expression[i+1]=='.':
-                i += 1
-                num += expression[i]
-                while i + 1 < len(expression) and expression[i + 1].isdigit():  # i + 1 < len(s) and
-                    i += 1
-                    num += expression[i]
+            num = ''
+            while i < len(expression) and (expression[i].isdigit() or expression[i]=='.'):
+                num+=expression[i]
+                i+=1
+
+            try:
+                num = float(num)
+            except ValueError:
+                raise SyntaxInputError("The number is not legal in in position {}".format(i))
+            num = str(num)
             result.append(num)
+            continue
 
         else:
             result.append(c)
-
         i+=1
-
     return result
