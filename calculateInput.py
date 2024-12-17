@@ -1,7 +1,4 @@
-from webbrowser import Error
-
 from buildNumbers import buildNumbers
-from exceptions import SyntaxInputError
 from infixToPostfix import infixToPostfix
 from exceptionHandling import *
 from minusAndTildaHandling import minusAndTildaHandling

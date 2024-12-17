@@ -1,4 +1,4 @@
-from exceptions import SyntaxInputError
+from customExceptions import SyntaxInputError
 
 
 def buildNumbers(expression):
