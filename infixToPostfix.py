@@ -1,6 +1,3 @@
-MATH_OPERATORS = ['+', '-', '*', '/', '^', '%', '~', '!']
-
-
 # Function to return precedence of operators
 def prec(c):
     if c == '!' or c == '#':
@@ -50,7 +47,7 @@ def infixToPostfix(s):
             st.pop()
 
         else:
-            while st and (prec(c) < prec(st[-1]) or prec(c) == prec(st[-1])): #if operator is smaller or equal in order
+            while st and (prec(c) <= prec(st[-1])): #if operator is smaller or equal in order
                 result.append(st.pop())
             st.append(c)
         i += 1
