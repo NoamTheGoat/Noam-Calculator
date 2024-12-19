@@ -1,7 +1,7 @@
 from customExceptions import SyntaxInputError
 
 
-def buildNumbers(expression):
+def build_numbers(expression):
     result = []
 
     i=0
@@ -10,18 +10,18 @@ def buildNumbers(expression):
 
         if c.isdigit():
             num = ''
-            while i < len(expression) and (expression[i].isdigit() or expression[i]=='.'):
+            while (i < len(expression) and
+                   (expression[i].isdigit() or expression[i]=='.')):
+
                 num+=expression[i]
                 i+=1
-
             try:
-                num = float(num)
+                tmpnum = float(num)
             except ValueError:
-                raise SyntaxInputError("The number is not legal in in position {}".format(i))
-            num = str(num)
+                raise SyntaxInputError(""
+                                       "The number {} is not legal in in position".format(num))
             result.append(num)
             continue
-
         else:
             result.append(c)
         i+=1

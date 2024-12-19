@@ -1,7 +1,7 @@
-def factorialOpr(oprnd):
+def factorial(oprnd):
     temp = oprnd
-    oprnd-=1
-    while(oprnd>0):
+    oprnd -= 1
+    while(oprnd > 0):
         temp*=oprnd
-        oprnd-=1
+        oprnd -= 1
     return temp
