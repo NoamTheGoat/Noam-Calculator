@@ -1,62 +1,85 @@
-from customArithmeticOperations.digSumArthOpr import digSumArthOpr
-from customArithmeticOperations.minArthOpr import minOpr
-from customArithmeticOperations.maxArthOpr import maxOpr
-from customArithmeticOperations.avgArthOpr import avgOpr
-from customArithmeticOperations.factorialArthOpr import factorialOpr
+from customArithmeticOperations.digSumArthOpr import digit_sum
+from customArithmeticOperations.minArthOpr import min_opr
+from customArithmeticOperations.maxArthOpr import max_opr
+from customArithmeticOperations.avgArthOpr import avg
+from customArithmeticOperations.factorialArthOpr import factorial
 from infixToPostfix import is_number
-
 BIN_MATH_OPERATORS = ['+', '-', '*', '/', '^', '%', '$', '&', '@']
 UN_MATH_OPERATORS = ['!', '#']
-def evalPostfix(expression):
+
+def eval_postfix(expression):
     operand_list = []
+    result = 0
     i=0
     while i < len(expression):
         c = expression[i]
         if is_number(c):
-            operand_list.append(float(c))
+            operand_list.append(c)
 
-        #check if '-' is unary minus
-        elif c == 'u':
-            result = evalUn(operand_list.pop(), c)
+        elif c in 'su':
+            result = eval_un(float(operand_list.pop()), c)
+            operand_list.append(result)
+
+        elif c == '#':
+            result = eval_un(operand_list.pop(), c)
             operand_list.append(result)
 
         elif c in BIN_MATH_OPERATORS:
-            result = evalBin(operand_list.pop(), c, operand_list.pop())
+            result = eval_bin(float(operand_list.pop()), c, float(operand_list.pop()))
+
+            if result == float("inf"):
+                raise ArithmeticError("The result is too big")
             operand_list.append(result)
 
+
         elif c in UN_MATH_OPERATORS:
-            result = evalUn(operand_list.pop(), c)
+            result = eval_un(float(operand_list.pop()), c)
+            if result == float("inf"):
+                raise ArithmeticError("The result is too big")
+
             operand_list.append(result)
 
         i+=1
 
     return operand_list.pop()
 
-def evalBin(operand2, operator, operand1):
+
+def eval_bin(operand2, operator, operand1):
     if operator == '+':
         return operand1 + operand2
+
     elif operator == '-':
         return operand1 - operand2
+
     elif operator == '*':
         return operand1 * operand2
+
     elif operator == '/':
-        if(operand2==0):
+        if operand2==0:
             raise ArithmeticError("Cannot devide by 0")
         return operand1 / operand2
+
     elif operator == '^':
         if operand1<0 and operand2>-1 and operand2<1:
-            raise ArithmeticError("Cannot do squirt to negative number.")
+            raise ArithmeticError("Cannot do squirt to negative number")
         return operand1 ** operand2
-    elif operator == '%':
-        return operand1 % operand2
-    elif operator == '$':
-        return maxOpr(operand1, operand2)
-    elif operator == '&':
-        return minOpr(operand1, operand2)
-    elif operator == '@':
-        return avgOpr(operand1, operand2)
 
-def evalUn(operand, operator):
+    elif operator == '%':
+        if operand2 == 0:
+            raise ArithmeticError("Cannot devide by 0")
+        return operand1 % operand2
+
+    elif operator == '$':
+        return max_opr(operand1, operand2)
+
+    elif operator == '&':
+        return min_opr(operand1, operand2)
+
+    elif operator == '@':
+        return avg(operand1, operand2)
+
+
+def eval_un(operand, operator):
     if operator == '!':
         if not operand == int(operand):
             raise ArithmeticError("Cannot do a factorial to a non negative number.")
@@ -64,10 +87,10 @@ def evalUn(operand, operator):
             raise ArithmeticError("Cannot do a factorial to a negative number.")
         if operand >170:
             raise OverflowError()
-        return factorialOpr(operand)
+        return factorial(operand)
+
     elif operator == '#':
-        if operand < 0:
-            raise ArithmeticError("Cannot sum the digits of a negative number.")
-        return digSumArthOpr(operand)
-    elif operator == 'u':  # Unary minus
+        return digit_sum(operand)
+
+    elif operator == 'u' or operator == 's':  # Unary minus
         return -operand
