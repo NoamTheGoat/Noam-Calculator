@@ -1,18 +1,23 @@
+from customExceptions import SyntaxInputError
+from exceptionHandling import is_float
+
 MATH_OPERATORS = ['+', '-', '*', '/', '^', '%', '~', '(']
 
-def minusAndTildaHandling(input_list):
+def minus_and_tilda_handling(input_list):
     result = []
     temp_index = 0
     is_tilda_minus = False
     is_sign_minus = False
+
+
     if input_list[0] == '~':
-        temp_index = minusOrTildaReduction(input_list)
+        temp_index = minus_or_tilda_reduction(input_list)
         if temp_index % 2 == 1:
-            result.append('-')
-            is_tilda_minus =True
+            result.append('s')
+            is_tilda_minus = True
 
     elif input_list[0] == '-':
-        temp_index = minusOrTildaReduction(input_list)
+        temp_index = minus_or_tilda_reduction(input_list)
         if temp_index % 2 == 1:
             result.append('u')
 
@@ -23,20 +28,37 @@ def minusAndTildaHandling(input_list):
         if c == '~' or (c == '-' and (input_list[i - 1] in MATH_OPERATORS)):
             if c == '~':
                 is_tilda_minus = True
-            if result[-1] == '(':
-                tIndex = minusOrTildaReduction(input_list, i)
-                if (tIndex - i) % 2 == 1:
+                if i + 1 < len(input_list) and input_list[i+1] == "(":
+                    temp_index = minus_or_tilda_reduction(input_list, i)
+                    if (temp_index - i) % 2 == 1:
+                        result.append('s')
+
+            elif result[-1] == '(':
+                temp_index = minus_or_tilda_reduction(input_list, i)
+                if (temp_index - i) % 2 == 1:
                     result.append('u')
+
             else:
                 is_sign_minus = True
-                tIndex=minusOrTildaReduction(input_list, i)
-                if (tIndex - i) % 2 == 1:
-                    result.append('-')
-                i = tIndex - 1
+                temp_index = minus_or_tilda_reduction(input_list, i)
+                if i + 1 < len(input_list) and input_list[i + 1] == "(":
+                    if (temp_index - i) % 2 == 1:
+                        result.append('s')
+                else:
+                    if (temp_index - i) % 2 == 1:
+                        result.append('-')
 
-        elif c.isdigit():
-            if result and ((result[-1] == '-' and is_sign_minus) or is_tilda_minus):
-                result[-1] = '-' + c
+                i = temp_index - 1
+
+
+        elif is_float(c):
+            if result:
+                if result[-1] == '-' and is_sign_minus:
+                    result[-1] = '-' + c
+                elif is_tilda_minus:
+                    result.append('-'+c)
+                else:
+                    result.append(c)
             else:
                 result.append(c)
 
@@ -45,19 +67,16 @@ def minusAndTildaHandling(input_list):
 
         else: #check if legal character
             result.append(c)
-        i+=1
+        i += 1
 
     return result
 
-def minusOrTildaReduction(list, index = 0):
+def minus_or_tilda_reduction(input_list, index = 0):
     i = index
-    if list[i]== '~':
-        i+=1
-    while list[i]== '-':
-        i+=1
-    #if(list[i] >= '0' and list[i] <= '9'): #check if i finished the list
+    if input_list[i] == '~':
+        i += 1
+    while input_list[i] == '-':
+        i += 1
+    if not (is_float(input_list[i]) or input_list[i]=="("):
+        raise SyntaxInputError("- cannot come before ~")
     return i
-
-#print(minusAndTildaHandling(["-", "5", "#"]))
-#print(minusAndTildaHandling(["-", "5", "!"]))
-#print(minusAndTildaHandling(["~","(", "-", "2", "-", "-", "555","!",")"]))
