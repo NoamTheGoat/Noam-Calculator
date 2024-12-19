@@ -1,36 +1,54 @@
-from buildNumbers import buildNumbers
-from infixToPostfix import infixToPostfix
-from exceptionHandling import *
-from minusAndTildaHandling import minusAndTildaHandling
-from evalPostfix import evalPostfix
+from buildNumbers import build_numbers
+from customExceptions import SyntaxInputError
+from exceptionHandling import legal_checking
+from infixToPostfix import infix_to_postfix
+from minusAndTildaHandling import minus_and_tilda_handling
+from evalPostfix import eval_postfix
 
-def calculate(equastion):
+#def calculate(equastion):
 
-    equastion = "".join(equastion.split())
-    eq_list = list(equastion)
 
-    #legalCharacters(eq_list)
-    #otherErrorChecks
-
-    #minusAndTildaErrorCheck(eq_List)
+if __name__ == "__main__":
     try:
-        legalChecking(eq_list)
+        print("Welcome to my calculator!")
+        print("\n---------------------------------------------------")
+        equastion = input("Enter equation to calculate, enter omega to finish: ")
 
 
-        eq_list = buildNumbers(eq_list)
+        while not equastion == "omega":
+            try:
+                equastion = "".join(equastion.split())
+                eq_list = list(equastion)
 
-        eq_list =  minusAndTildaHandling(eq_list)
+                eq_list = build_numbers(eq_list)
 
-    #infixToPostfixErrorCheck(eq_List)
+                legal_checking(eq_list)
 
-        eq_list = infixToPostfix(eq_list)
+                eq_list = minus_and_tilda_handling(eq_list)
 
-        solution = evalPostfix(eq_list)
-    except OverflowError:
-        print("The expression of the equation is to big to calculate")
-    except Exception as e:
-        print(e)
+                eq_list = infix_to_postfix(eq_list)
 
-    return solution
+                solution = eval_postfix(eq_list)
 
-print(calculate("3++3"))
+                print("The result is: "+str(solution))
+                print("---------------------------------------------------\n")
+
+            except OverflowError:
+                print("The result is too big, try again")
+                print("---------------------------------------------------\n")
+            #except ArithmeticError as e:
+            #    print(e, ", try again")
+            #except SyntaxInputError as e:
+            #    print(e, ", try again")
+            except Exception as e:
+                print(e, ", try again")
+                print("---------------------------------------------------\n")
+
+            print("---------------------------------------------------")
+            equastion = input("Enter equastion to calculate, enter omega to finish: ")
+
+    except KeyboardInterrupt:
+        print("\n")
+
+    print("Thanks for using my calculator, "
+          "have a nice day and remember omega is the best!")
