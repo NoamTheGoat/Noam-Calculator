@@ -82,15 +82,15 @@ def eval_bin(operand2, operator, operand1):
 def eval_un(operand, operator):
     if operator == '!':
         if not operand == int(operand):
-            raise ArithmeticError("Cannot do a factorial to a non negative number.")
+            raise ArithmeticError("Cannot do a factorial to a non whole number")
         if operand < 0:
-            raise ArithmeticError("Cannot do a factorial to a negative number.")
+            raise ArithmeticError("Cannot do a factorial to a negative number")
         if operand >170:
             raise OverflowError()
         return factorial(operand)
 
     elif operator == '#':
-        return digit_sum(operand)
+        return digit_sum(str(operand))
 
     elif operator == 'u' or operator == 's':  # Unary minus
         return -operand
