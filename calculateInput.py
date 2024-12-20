@@ -30,7 +30,7 @@ if __name__ == "__main__":
 
                 solution = eval_postfix(eq_list)
 
-                print("The result is: "+str(solution))
+                print("The result is: " + str(solution))
                 print("---------------------------------------------------\n")
 
             except OverflowError:
