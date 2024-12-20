@@ -5,48 +5,68 @@ from infixToPostfix import infix_to_postfix
 from minusAndTildaHandling import minus_and_tilda_handling
 from evalPostfix import eval_postfix
 
-#def calculate(equastion):
+def calculate(equastion):
+    equastion = "".join(equastion.split())
+    eq_list = list(equastion)
+
+    eq_list = build_numbers(eq_list)
+
+    legal_checking(eq_list)
+
+    eq_list = minus_and_tilda_handling(eq_list)
+
+    eq_list = infix_to_postfix(eq_list)
+
+    solution = eval_postfix(eq_list)
+    return solution
 
 
 if __name__ == "__main__":
     try:
         print("Welcome to my calculator!")
-        print("\n---------------------------------------------------")
-        equastion = input("Enter equation to calculate, enter omega to finish: ")
+        print("\n----------------------------------------------------------------------------")
+        equastion = input("Enter equation to calculate, "
+                          "enter h for help and goodbye/quit/exit to exit: ")
 
 
-        while not equastion == "omega":
+        while not equastion in ["goodbye", "quit", "exit"]:
             try:
-                equastion = "".join(equastion.split())
-                eq_list = list(equastion)
+                if equastion in ["h", "help"]:
+                    print("manual:\n"
+                          "addition : X+X\n"
+                          "subtraction : X-X\n"
+                          "multiplication : X*X\n"
+                          "division : X/X\n"
+                          "power : X^X\n"
+                          "modulo: X%X\n"
+                          "maximum: X$X\n"
+                          "minimum: X&X\n"
+                          "average: X@X\n"
+                          "negate: ~X\n"
+                          "factorial: X!\n"
+                          "sum of digits: X#")
+                    print("----------------------------------------------------------------------------\n")
 
-                eq_list = build_numbers(eq_list)
 
-                legal_checking(eq_list)
-
-                eq_list = minus_and_tilda_handling(eq_list)
-
-                eq_list = infix_to_postfix(eq_list)
-
-                solution = eval_postfix(eq_list)
-
-                print("The result is: " + str(solution))
-                print("---------------------------------------------------\n")
+                else:
+                    solution = calculate(equastion)
+                    print("The result is: " + str(solution))
+                    print("----------------------------------------------------------------------------\n")
 
             except OverflowError:
                 print("The result is too big, try again")
-                print("---------------------------------------------------\n")
+                print("----------------------------------------------------------------------------\n")
             #except ArithmeticError as e:
             #    print(e, ", try again")
             #except SyntaxInputError as e:
             #    print(e, ", try again")
             except Exception as e:
                 print(e, ", try again")
-                print("---------------------------------------------------\n")
+                print("----------------------------------------------------------------------------\n")
 
-            print("---------------------------------------------------")
-            equastion = input("Enter equastion to calculate, enter omega to finish: ")
-
+            print("----------------------------------------------------------------------------")
+            equastion = input("Enter equation to calculate, "
+                              "enter h for help and goodbye/quit/exit to exit: ")
     except KeyboardInterrupt:
         print("\n")
 
