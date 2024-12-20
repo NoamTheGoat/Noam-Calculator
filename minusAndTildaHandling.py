@@ -32,6 +32,10 @@ def minus_and_tilda_handling(input_list):
                     temp_index = minus_or_tilda_reduction(input_list, i)
                     if (temp_index - i) % 2 == 1:
                         result.append('s')
+                else:
+                    temp_index = minus_or_tilda_reduction(input_list, i)
+                    if (temp_index - i) % 2 == 1:
+                        result.append('-')
 
             elif result[-1] == '(':
                 temp_index = minus_or_tilda_reduction(input_list, i)
@@ -55,8 +59,8 @@ def minus_and_tilda_handling(input_list):
             if result:
                 if result[-1] == '-' and is_sign_minus:
                     result[-1] = '-' + c
-                elif is_tilda_minus:
-                    result.append('-'+c)
+                elif is_tilda_minus and (result[-1] == 's' or result[-1]=='-'):
+                    result[-1] = '-' + c
                 else:
                     result.append(c)
             else:
@@ -77,6 +81,7 @@ def minus_or_tilda_reduction(input_list, index = 0):
         i += 1
     while input_list[i] == '-':
         i += 1
-    if not (is_float(input_list[i]) or input_list[i]=="("):
+    if not (is_float(input_list[i]) or input_list[i]=="(" or
+            (index > 0 and input_list[index-1] == '-')):
         raise SyntaxInputError("- cannot come before ~")
     return i
