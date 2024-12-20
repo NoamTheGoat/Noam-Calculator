@@ -13,7 +13,8 @@ def legal_checking(expression):
 def initial_exception_check(expression):
     if not expression:
         raise SyntaxInputError("The input is empty")
-
+    if len(expression) == 1  and expression[0] in LEGAL_CHARACTERS:
+        raise SyntaxInputError("this character {} cannot come alone".format(expression[0]))
     i=0
     while i < len(expression):
         c = expression[i]
@@ -22,9 +23,9 @@ def initial_exception_check(expression):
             if c not in LEGAL_CHARACTERS:
                 if c in "[]{}<>":
                     raise SyntaxInputError(""
-                                           "The only parentheses allowed is () in position {}".format(i+1))
+                                           "The only parentheses allowed are () in position {}".format(i+1))
                 else:
-                    raise SyntaxInputError("Illegal character in the input")
+                    raise SyntaxInputError("Illegal characters in the input")
         i+=1
 
 def is_float(value):
