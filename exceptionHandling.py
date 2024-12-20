@@ -97,8 +97,9 @@ def operator_checking(expression):
 
         elif i + 1 < len(expression) and expression[i] == "-":
             if not (is_float(expression[i+1]) or expression[i+1] in "1234567890-("):
-                raise SyntaxInputError(""
-                                       "this character {} cannot come before {}".format(expression[i+1], expression[i]))
+                if not (i > 0 and expression[i-1] in "1234567890(" and expression[i+1] == "~"):
+                    raise SyntaxInputError(""
+                                           "this character {} cannot come before {}".format(expression[i+1], expression[i]))
 
         elif i > 0 and expression[i] == "~":
             if not (i == 0 or expression[i-1]
