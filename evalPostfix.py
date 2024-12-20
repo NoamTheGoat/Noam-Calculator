@@ -28,14 +28,14 @@ def eval_postfix(expression):
             result = eval_bin(float(operand_list.pop()), c, float(operand_list.pop()))
 
             if result == float("inf"):
-                raise ArithmeticError("The result is too big")
+                raise OverflowError()
             operand_list.append(result)
 
 
         elif c in UN_MATH_OPERATORS:
             result = eval_un(float(operand_list.pop()), c)
             if result == float("inf"):
-                raise ArithmeticError("The result is too big")
+                raise OverflowError()
 
             operand_list.append(result)
 
@@ -61,7 +61,9 @@ def eval_bin(operand2, operator, operand1):
 
     elif operator == '^':
         if operand1<0 and operand2>-1 and operand2<1:
-            raise ArithmeticError("Cannot do squirt to negative number")
+            raise ArithmeticError("Cannot do root to negative number")
+        if operand2 == 0 and operand1 == 0:
+            raise ArithmeticError("Cannot do power to 0^0")
         return operand1 ** operand2
 
     elif operator == '%':
@@ -87,6 +89,8 @@ def eval_un(operand, operator):
             raise ArithmeticError("Cannot do a factorial to a negative number")
         if operand >170:
             raise OverflowError()
+        if operand == 0:
+            return 1
         return factorial(operand)
 
     elif operator == '#':
