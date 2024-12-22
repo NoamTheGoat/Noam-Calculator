@@ -56,7 +56,7 @@ def parentheses_checking(expression):
         elif c == ")":
             close_counter+=1
             if close_counter>open_counter:
-                if i + 1 <len(expression) and expression[i+1].is_float:
+                if i + 1 < len(expression) and is_float(expression[i+1]):
                     raise SyntaxInputError(""
                                            "this operand {} cannot come after )".format(expression[i + 1], expression[i]))
 
@@ -69,7 +69,7 @@ def parentheses_checking(expression):
 
         i += 1
 
-    if open_counter>close_counter:
+    if not open_counter == close_counter:
         raise SyntaxInputError("there are missing )".format(i + 1))
 
 
@@ -87,7 +87,7 @@ def operator_checking(expression):
 
         if i + 1 < len(expression) and expression[i] in BIN_MATH_OPERATORS:
             if (expression[i+1] in BIN_MATH_OPERATORS or
-                    expression[i+1] in UN_MATH_OPERATORS):
+                    expression[i+1] in UN_MATH_OPERATORS or expression[i+1] == ")"):
                 raise SyntaxInputError(""
                                        "this operator {} cannot come before {}".format(expression[i+1], expression[i]))
 
