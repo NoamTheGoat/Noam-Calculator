@@ -59,17 +59,20 @@ def minus_and_tilda_handling(input_list):
             if result:
                 if result[-1] == '-' and is_sign_minus:
                     result[-1] = '-' + c
+
                 elif is_tilda_minus and (result[-1] == 's' or result[-1]=='-'):
                     result[-1] = '-' + c
+
                 else:
                     result.append(c)
+                    is_tilda_minus = False
             else:
                 result.append(c)
 
         elif c in MATH_OPERATORS:
             result.append(c)
 
-        else: #check if legal character
+        else:
             result.append(c)
         i += 1
 
