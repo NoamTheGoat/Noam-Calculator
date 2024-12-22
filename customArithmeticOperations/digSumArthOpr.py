@@ -1,5 +1,7 @@
 
 def digit_sum(oprnd):
+    if "e" in oprnd:
+        raise ArithmeticError("the number is to big to sum the digits")
     oprnd = oprnd.replace(".", "")
     sum = 0
     oprnd = int(oprnd)
