@@ -5,12 +5,33 @@ BIN_MATH_OPERATORS = ['+', '*', '/', '^', '%', '$', '&', '@']
 UN_MATH_OPERATORS = ['!', '#']
 
 def legal_checking(expression):
-    initial_exception_check(expression)
+    """
+        Performs a series of checks: illegal characters, correct usage of parentheses, and
+        proper placement of operators and operands.
+        to ensure the input mathematical expression is valid.
+
+        Parameters:
+            expression (list): The mathematical expression as a list of characters or tokens.
+
+        Raises:
+            SyntaxInputError: If the expression is invalid due to syntax errors.
+        """
+    basic_exception_check(expression)
     parentheses_checking(expression)
     operator_checking(expression)
 
 
-def initial_exception_check(expression):
+def basic_exception_check(expression):
+    """
+        Checks the expression for basic syntax errors, such as empty input or illegal characters.
+
+        Parameters:
+            expression (list): The mathematical expression as a list of characters or tokens.
+
+        Raises:
+            SyntaxInputError: If the expression is empty, contains illegal characters, or
+                              includes invalid parentheses types.
+        """
     if not expression:
         raise SyntaxInputError("The input is empty")
     if len(expression) == 1  and expression[0] in LEGAL_CHARACTERS:
@@ -37,6 +58,16 @@ def is_float(value):
 
 
 def parentheses_checking(expression):
+    """
+        Ensures there are matching opening and closing parentheses, and checks
+        for wrong usage of parentheses like empty parentheses or incorrect operator placement.
+
+        Parameters:
+            expression (list): The mathematical expression as a list of characters or tokens.
+
+        Raises:
+            SyntaxInputError: If parentheses are mismatched or improperly used.
+        """
     i = 0
     open_counter = 0
     close_counter = 0
@@ -74,6 +105,17 @@ def parentheses_checking(expression):
 
 
 def operator_checking(expression):
+    """
+        Ensures operators are correctly placed within the mathematical expression.
+        Validates rules for binary and unary operators, checks for invalid operator sequences,
+        and ensures operators aren't improperly placed at the beginning or end.
+
+        Parameters:
+            expression (list): The mathematical expression as a list of characters or tokens.
+
+        Raises:
+            SyntaxInputError: If operators are improperly placed or misused.
+        """
     i=0
     if expression[0] in BIN_MATH_OPERATORS or expression[0] in UN_MATH_OPERATORS:
         raise SyntaxInputError(""

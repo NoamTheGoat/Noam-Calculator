@@ -4,6 +4,17 @@ from exceptionHandling import is_float
 MATH_OPERATORS = ['+', '-', '*', '/', '^', '%', '~', '(']
 
 def minus_and_tilda_handling(input_list):
+    """
+        Processes and handles the special cases for the minus '-' and tilde '~' operators in the input list.
+        The function handles the reduction of consecutive minus and tilde operators, and applies the appropriate
+        transformations to the operands.
+
+        Parameters:
+            input_list (list): A list of strings representing the expression, where each string is a character or operator.
+
+        Returns:
+            list: A list of strings where the tilde and minus operators are handled appropriately.
+        """
     result = []
     temp_index = 0
     is_tilda_minus = False
@@ -79,6 +90,19 @@ def minus_and_tilda_handling(input_list):
     return result
 
 def minus_or_tilda_reduction(input_list, index = 0):
+    """
+        Processes the input list starting at the given index to handle consecutive minus '-' and tilde '~' operators.
+        The function will reduce consecutive minus and tilde operators.
+        Parameters:
+            input_list (list): A list of strings representing the expression.
+            index (int): The index to start processing from (default is 0).
+
+        Returns:
+            int: The updated index after processing the minus or tilde operators.
+
+        Raises:
+            SyntaxInputError: If a minus or tilde operator appears in an invalid position.
+        """
     i = index
     if input_list[i] == '~':
         i += 1

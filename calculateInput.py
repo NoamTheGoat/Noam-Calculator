@@ -6,6 +6,22 @@ from minusAndTildaHandling import minus_and_tilda_handling
 from evalPostfix import eval_postfix
 
 def calculate(equastion):
+    """
+        Processes a mathematical equation string and calculates the result.
+        This function takes a string representation of a mathematical equation,
+        parses it, validates its syntax, converts it to postfix, and evaluates it.
+
+        Parameters:
+            equastion (str): The mathematical equation to be evaluated.
+
+        Returns:
+            float: The result of the mathematical equation.
+
+        Raises:
+            SyntaxInputError: If the equation contains invalid syntax.
+            OverflowError: If the result is too big.
+            Exception: For other errors encountered during processing.
+        """
     equastion = "".join(equastion.split())
     eq_list = list(equastion)
 

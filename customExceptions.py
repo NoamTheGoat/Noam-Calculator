@@ -1,5 +1,6 @@
 class SyntaxInputError(Exception):
-    """Exception raised for custom error scenarios.
+    """
+    A custom exception for invalid syntax errors
 
     Attributes:
         message -- explanation of the error
